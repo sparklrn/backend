@@ -1,0 +1,1 @@
+test post user route for platform with ouath parameters
