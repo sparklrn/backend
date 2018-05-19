@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const OAuth1Strategy = require('passport-oauth').OAuthStrategy;
+const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
@@ -47,5 +47,30 @@ module.exports = (passport)=>{
         });;
     }));
 
-}
+    passport.use('provider', new OAuthStrategy({
+        requestTokenURL: 'https://www.provider.com/oauth/request_token',
+        accessTokenURL: 'https://www.provider.com/oauth/access_token',
+        userAuthorizationURL: 'https://www.provider.com/oauth/authorize',
+        consumerKey: 'CONSUMER_KEY',
+        consumerSecret: 'CONSUMER_SECRET',
+        callbackURL: 'https://www.example.com/auth/provider/callback'
+    },
+    (token, tokenSecret, profile, done) => {
+        User.findOrCreate(user, (err, done) => {
+            done(err, user);
+        });
+    }));
 
+    passport.use('provider2', new OAuth2Strategy({
+        authorizationURL: 'https://www.provider.com/oauth2/authorize',
+        tokenURL: 'https://www.provider.com/oauth2/token',
+        clientID: 'client_id',
+        clientSecret: 'client_secret',
+        callbackURL: 'https://www.example.com/auth/provider/callback'
+    },
+    (accessToken, refreshToken, profile, done) => {
+        User.findOrCreate(user, (err, done) => {
+            done(err, user);
+        });
+    }));
+}
