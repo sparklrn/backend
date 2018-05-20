@@ -3,10 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "db:migrate": "sequelize db:migrate",
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "pretest": "NODE_ENV=test npm run db:migrate",
+    "start": "nodemon ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
@@ -14,12 +20,17 @@
     "jsonwebtoken": "^8.2.1",
     "morgan": "~1.9.0",
     "passport-jwt": "^4.0.0",
+    "passport-oauth": "^1.0.0",
     "passport-oauth1": "^1.1.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "faker": "^4.1.0"
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "factory-girl": "^5.0.2",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.10"
   }
 }
