@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var passport = require('passport');
-var session = require('express-session');
 var jwt = require('jsonwebtoken');
 var cors = require('cors');
 
@@ -29,14 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator());
 app.use(cors());
 
-app.use(session({
-    secret:'hope me saying this is secret is secret enough',
-    resave:false,
-    saveUninitialized: true,
-}));
-
 app.use(passport.initialize());
-app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/api', auth);
